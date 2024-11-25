@@ -37,7 +37,7 @@ app.get("/perfumes", async(req,res)=>{
 
     res.send(result)
 }catch(e){
-    res.status(500).send("Erro do servidor")
+    res.status(500).send(e)
 }
   
 
