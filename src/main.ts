@@ -14,7 +14,11 @@ app.use(express.json())//Middleware
 
 /*incluir o CORS -> Quando a Gente tem outra porta fazendo */
 app.use(cors())
-//Rota de perfumes
+
+
+
+
+//Parte do Felipe:
 
 app.get("/perfumes", async(req,res)=>{
     
@@ -43,13 +47,13 @@ app.get("/perfumes", async(req,res)=>{
 
    // PASSO 4: Colocar os dados do banco no response
  
-   
+
    
    
 })
 
 /*
-// Parte do Mateus 
+// Parte do Mateus:
 app.get("/usuarios", async (req, res) => {
     try {
         const conexao = await mysql.createConnection({
@@ -72,6 +76,10 @@ app.get("/usuarios", async (req, res) => {
 */
 /*-----------------------------------------------------------*/
 
+
+
+
+// Parte do Marcos Antonio:
 // Inserindo um produto no Back-end:
 
 

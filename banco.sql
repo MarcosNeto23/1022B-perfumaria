@@ -1,5 +1,16 @@
 
+USE defaultdb;
+CREATE TABLE IF NOT EXISTS perfumes(
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50),
+    marca VARCHAR(40),
+    fragrancia VARCHAR(50),
+    volume VARCHAR(40),
+    preco DECIMAL(10,2),
+    imagem VARCHAR(300)
+);
 
+INSERT INTO perfumes VALUES (100,'Malbec Ultra Bleu','oBoticário','Amadeirado', '100 ml', 209.90,'https://fraguru.com/mdimg/perfume/375x500.75487.jpg');
 
 
 
