@@ -13,7 +13,28 @@ CREATE TABLE IF NOT EXISTS perfumes(
 INSERT INTO perfumes VALUES (100,'Malbec Ultra Bleu','oBoticário','Amadeirado', '100 ml', 209.90,'https://fraguru.com/mdimg/perfume/375x500.75487.jpg');
 
 
+USE defaultdb;
+CREATE TABLE IF NOT EXISTS clientes(
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50),
+	sobrenome VARCHAR(75),
+    idade decimal(3),
+    email VARCHAR(100)
+);
 
+INSERT INTO `defaultdb`.`clientes` (`id`, `nome`, `sobrenome`, `idade`, `email`) VALUES ('001', 'Mateus ', 'Prado', '17', 'mateus@gmail.com');
+
+
+
+
+
+
+
+
+
+
+
+/*       ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*USE defaultdb;
 CREATE TABLE IF NOT EXISTS produtos(
 	id BIGINT PRIMARY KEY AUTO_INCREMENT,

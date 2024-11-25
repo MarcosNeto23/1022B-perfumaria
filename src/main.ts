@@ -52,9 +52,9 @@ app.get("/perfumes", async(req,res)=>{
    
 })
 
-/*
+
 // Parte do Mateus:
-app.get("/usuarios", async (req, res) => {
+app.get("/clientes", async (req, res) => {
     try {
         const conexao = await mysql.createConnection({
             host: process.env.dbhost ? process.env.dbhost : "localhost",
@@ -65,7 +65,7 @@ app.get("/usuarios", async (req, res) => {
         });
 
         // Query para selecionar usuários
-        const [result, fields] = await conexao.query("SELECT * FROM usuarios");
+        const [result, fields] = await conexao.query("SELECT * FROM clientes");
         
         await conexao.end();
         res.send(result);
@@ -73,7 +73,7 @@ app.get("/usuarios", async (req, res) => {
         res.status(500).send("Erro do servidor");
     }
 });
-*/
+
 /*-----------------------------------------------------------*/
 
 
