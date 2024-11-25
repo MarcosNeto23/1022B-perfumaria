@@ -42,8 +42,9 @@ app.get("/perfumes", async(req,res)=>{
   
 
    // PASSO 4: Colocar os dados do banco no response
-
-    
+ 
+   
+   
    
 })
 
