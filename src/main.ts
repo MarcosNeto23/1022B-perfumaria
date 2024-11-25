@@ -1,9 +1,5 @@
 console.log(" Olá Mundo")
 
-
-//Live Server  é do Front-End
-
-
 //
 /*1 - Para construir um servidor back-end e responder 
 Vamos utilizar o EXPRESS */
@@ -18,9 +14,9 @@ app.use(express.json())//Middleware
 
 /*incluir o CORS -> Quando a Gente tem outra porta fazendo */
 app.use(cors())
-//Rota de produtos
+//Rota de perfumes
 
-app.get("/produtos", async(req,res)=>{
+app.get("/perfumes", async(req,res)=>{
     
    // ok PASSO 1: Criar um banco de dados 
 
@@ -34,8 +30,8 @@ app.get("/produtos", async(req,res)=>{
         database: process.env.dbname?process.env.dbname: "banco1022b",
         port: process.env.dbport?parseInt(process.env.dbport): 3306
     })
-     // PASSO 3: QUERY -> SELECT * FROM produtos 
-   const [result,filds] = await conexao.query("SELECT * from produtos")
+     // PASSO 3: QUERY -> SELECT * FROM perfumes
+   const [result,filds] = await conexao.query("SELECT * from perfumes")
    
    await conexao.end()
 
@@ -51,8 +47,8 @@ app.get("/produtos", async(req,res)=>{
    
 })
 
-
-// Nova rota para usuários
+/*
+// Parte do Mateus 
 app.get("/usuarios", async (req, res) => {
     try {
         const conexao = await mysql.createConnection({
@@ -72,13 +68,13 @@ app.get("/usuarios", async (req, res) => {
         res.status(500).send("Erro do servidor");
     }
 });
-
+*/
 /*-----------------------------------------------------------*/
 
 // Inserindo um produto no Back-end:
 
 
-app.post("/produtos", async(req,res)=>{
+app.post("/perfumes", async(req,res)=>{
     
     // ok PASSO 1: Criar um banco de dados 
  
@@ -92,9 +88,9 @@ app.post("/produtos", async(req,res)=>{
          database: process.env.dbname?process.env.dbname: "banco1022b",
          port: process.env.dbport?parseInt(process.env.dbport): 3306
      })
-      // PASSO 3: QUERY -> SELECT * FROM produtos
-      const {id,nome,descricao,preco,imagem} = req.body 
-    const [result,filds] = await conexao.query("INSERT INTO produtos VALUES (?,?,?,?,?)", [id,nome,descricao,preco,imagem])
+      // PASSO 3: QUERY -> SELECT * FROM perfumes
+      const {id,nome,marca,fragancia,volume,preco,imagem} = req.body 
+    const [result,filds] = await conexao.query("INSERT INTO perfumes VALUES (?,?,?,?,?)", [id,nome,marca,fragancia,volume,preco,imagem])
     
     await conexao.end()
  

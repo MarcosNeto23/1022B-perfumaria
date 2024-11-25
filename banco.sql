@@ -1,4 +1,9 @@
-USE defaultdb;
+
+
+
+
+
+/*USE defaultdb;
 CREATE TABLE IF NOT EXISTS produtos(
 	id BIGINT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50),
@@ -23,3 +28,4 @@ INSERT INTO `defaultdb`.`usuarios` (`id`, `nome`, `email`, `created_at`, `update
 INSERT INTO `defaultdb`.`usuarios` (`id`, `nome`, `email`, `created_at`, `updated_at`) VALUES ('2', 'Felipe Brito', 'felipe@gmail.com', '2024-10-22 07:45', '2024-10-24 07:31');
 
 INSERT INTO `defaultdb`.`usuarios` (`id`, `nome`, `email`, `created_at`, `updated_at`) VALUES ('3', 'Marcos Neto', 'Marcos.neto@gmail.com', '2024-10-23 10:50', '2024-12-25 14:20');
+*/
