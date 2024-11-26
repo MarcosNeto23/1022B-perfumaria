@@ -22,7 +22,7 @@ id BIGINT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(100)
 );
 
-INSERT INTO `defaultdb`.`clientes` (`id`, `nome`, `sobrenome`, `idade`, `email`) VALUES ('001', 'Mateus ', 'Prado', '17', 'mateus@gmail.com');
+UPDATE `defaultdb`.`clientes` SET `sobrenome` = 'Do Prado Alcântara' WHERE (`id` = '1');
 
 
 
