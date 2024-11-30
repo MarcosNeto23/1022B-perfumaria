@@ -111,7 +111,7 @@ app.post("/clientes", async (req, res) => {
 
 
 // Parte do Marcos Antonio:
-// Inserindo um produto no Back-end:
+// Inserindo um perfume no Back-end:
 
 
 app.post("/perfumes", async(req,res)=>{
@@ -130,7 +130,7 @@ app.post("/perfumes", async(req,res)=>{
      })
       // PASSO 3: QUERY -> SELECT * FROM perfumes
       const {id,nome,marca,fragancia,volume,preco,imagem} = req.body 
-    const [result,filds] = await conexao.query("INSERT INTO perfumes VALUES (?,?,?,?,?)", [id,nome,marca,fragancia,volume,preco,imagem])
+    const [result,filds] = await conexao.query("INSERT INTO perfumes VALUES (?,?,?,?,?,?,?)", [id,nome,marca,fragancia,volume,preco,imagem])
     
     await conexao.end()
  
