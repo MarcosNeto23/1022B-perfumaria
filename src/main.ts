@@ -17,8 +17,12 @@ app.use(cors())
 
 
 
+import BancoMysql from './db/bancoMysql'
 
-//Parte do Felipe:
+
+
+
+//Parte do Felipe e do Marcos:
 
 app.get("/perfumes", async(req,res)=>{
     
@@ -43,7 +47,7 @@ app.get("/perfumes", async(req,res)=>{
 }catch(e){
     res.status(500).send(e)
 }
-  
+
 
    // PASSO 4: Colocar os dados do banco no response
  
@@ -53,59 +57,6 @@ app.get("/perfumes", async(req,res)=>{
 })
 
 
-// Parte do Mateus - Listagem dos clientes e Inserindo eles:
-//Listando os clientes:
-app.get("/clientes", async (req, res) => {
-    try {
-        const conexao = await mysql.createConnection({
-            host: process.env.dbhost ? process.env.dbhost : "localhost",
-            user: process.env.dbuser ? process.env.dbuser : "root",
-            password: process.env.dbpassword ? process.env.dbpassword : "",
-            database: process.env.dbname ? process.env.dbname : "banco1022b",
-            port: process.env.dbport ? parseInt(process.env.dbport) : 3306
-        });
-
-        // Query para selecionar usuários
-        const [result, fields] = await conexao.query("SELECT * FROM clientes");
-        
-        await conexao.end();
-        res.send(result);
-    } catch (e) {
-        res.status(500).send("Erro do servidor");
-    }
-});
-
-
-//Inserindo clientes:
-// Parte para inserir um cliente no Back-end:
-app.post("/clientes", async (req, res) => {
-    try {
-        const conexao = await mysql.createConnection({
-            host: process.env.dbhost ? process.env.dbhost : "localhost",
-            user: process.env.dbuser ? process.env.dbuser : "root",
-            password: process.env.dbpassword ? process.env.dbpassword : "",
-            database: process.env.dbname ? process.env.dbname : "banco1022b",
-            port: process.env.dbport ? parseInt(process.env.dbport) : 3306
-        });
-
-        const { id, nome, sobrenome, idade, email } = req.body;
-
-        const [result, fields] = await conexao.query("INSERT INTO clientes (id, nome, sobrenome, idade, email ) VALUES (?, ?, ?, ?, ?)", [id, nome, sobrenome, idade, email ]);
-
-        await conexao.end();
-
-        res.send(result);
-    } catch (e) {
-        console.log(e);
-        res.status(500).send("Erro do servidor");
-    }
-});
-
-
-
-
-
-/*-----------------------------------------------------------*/
 
 
 
@@ -147,6 +98,107 @@ app.post("/perfumes", async(req,res)=>{
     
  })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /// Parte de Configuração dos Clientes feito por Mateus do Prado:
+ 
+// Parte do Mateus - Listagem dos clientes e Inserindo eles:
+//Listando os clientes:
+app.get("/clientes", async (req, res) => {
+    try{
+        const banco = new BancoMysql();
+        const result = await banco.listarClientes()
+        console.log(result)
+        await banco.end()
+        res.send(result)
+    }catch(e){
+        console.log(e)
+        res.status(500).send("Erro do servidor")
+    }  
+})
+
+
+
+
+//Inserindo clientes:
+// Parte para inserir um cliente no Back-end:
+app.post("/clientes", async (req, res) => {
+   
+   
+    try{
+        const {id,nome,sobrenome,idade,email} = req.body
+        
+        const banco = new BancoMysql();
+        
+        const cliente = {id:parseInt(id),nome,sobrenome,idade,email}
+        const result = await banco.inserirClientes(cliente)
+        console.log(result)
+        
+        await banco.end()
+        
+        res.status(200).send(result)
+    }catch(e){
+        console.log(e)
+        res.status(500).send("Erro do servidor")
+    }  
+   
+   
+
+});
+
+app.delete("/clientes/:id",async (req,res) =>{
+    try{
+        const banco = new BancoMysql();
+
+        const sqlQuery = "DELETE FROM clientes WHERE id = ?"
+        const parametro = [req.params.id]
+
+        const result = await banco.excluirClientes(req.params.id)
+        
+
+        res.status(200).send(result)
+    }catch(e){
+          console.log(e)
+        res.status(500).send("Erro do servidor")
+    }  
+
+    console.log("Tentando excluir o cliente de id:", req.params.id)
+    
+})
+
+
+app.put("/clientes/:id", async (req,res) =>{
+    try{
+        const {nome,sobrenome,idade,email} = req.body
+        const banco = new BancoMysql();
+
+        //const sqlQuery = "UPDATE produtos SET nome = ?, descricao = ?, preco = ?, imagem = ? WHERE id = ?"
+        const cliente = {nome, sobrenome, idade, email}
+
+        const result = await banco.alterarClientes(req.params.id, cliente)
+        res.status(200).send(result)
+
+
+    }catch(e){
+        console.log(e)
+        res.status(500).send("Erro do servidor")
+    }  
+    console.log("Tentando alterar o cliente de id:",  req.params.id)
+   
+})
 
 
 
