@@ -22,95 +22,6 @@ import BancoMysql from './db/bancoMysql'
 
 
 
-//Parte do Felipe e do Marcos:
-
-app.get("/perfumes", async(req,res)=>{
-    
-   // ok PASSO 1: Criar um banco de dados 
-
-   // PASSO 2: Usar a lib mysql2 para conectar o banco
-   try{
-    const conexao = await mysql.createConnection({
-        /*OPERADOR TERNÁRIO*/
-        host: process.env.dbhost?process.env.dbhost: "localhost",
-        user: process.env.dbuser?process.env.dbuser: "root",
-        password: process.env.dbpassword?process.env.dbpassword: "",
-        database: process.env.dbname?process.env.dbname: "banco1022b",
-        port: process.env.dbport?parseInt(process.env.dbport): 3306
-    })
-     // PASSO 3: QUERY -> SELECT * FROM perfumes
-   const [result,filds] = await conexao.query("SELECT * from perfumes")
-   
-   await conexao.end()
-
-    res.send(result)
-}catch(e){
-    res.status(500).send(e)
-}
-
-
-   // PASSO 4: Colocar os dados do banco no response
- 
-
-   
-   
-})
-
-
-
-
-
-
-// Parte do Marcos Antonio:
-// Inserindo um perfume no Back-end:
-
-
-app.post("/perfumes", async(req,res)=>{
-    
-    // ok PASSO 1: Criar um banco de dados 
- 
-    // PASSO 2: Usar a lib mysql2 para conectar o banco
-    try{
-     const conexao = await mysql.createConnection({
-         /*OPERADOR TERNÁRIO*/
-         host: process.env.dbhost?process.env.dbhost: "localhost",
-         user: process.env.dbuser?process.env.dbuser: "root",
-         password: process.env.dbpassword?process.env.dbpassword: "",
-         database: process.env.dbname?process.env.dbname: "banco1022b",
-         port: process.env.dbport?parseInt(process.env.dbport): 3306
-     })
-      // PASSO 3: QUERY -> SELECT * FROM perfumes
-      const {id,nome,marca,fragancia,volume,preco,imagem} = req.body 
-    const [result,filds] = await conexao.query("INSERT INTO perfumes VALUES (?,?,?,?,?,?,?)", [id,nome,marca,fragancia,volume,preco,imagem])
-    
-    await conexao.end()
- 
-     res.send(result)
- }catch(e){
-    console.log(e)
-     res.status(500).send("Erro do servidor")
- }
-   
- 
-    // PASSO 4: Colocar os dados do banco no response
- 
-     
-    
- })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
  /// Parte de Configuração dos Clientes feito por Mateus do Prado:
@@ -201,6 +112,92 @@ app.put("/clientes/:id", async (req,res) =>{
 })
 
 
+/// Parte de Configuração dos Perfumes feito por Marcos Antonio e Felipe Brito:
+ 
+// Parte do Marcos - Listagem, Inserindo, alterando e removendo perfumes :
+//Listando os perdumes:
+app.get("/perfumes", async (req, res) => {
+    try{
+        const banco = new BancoMysql();
+        const result = await banco.listarPerfumes()
+        console.log(result)
+        await banco.end()
+        res.send(result)
+    }catch(e){
+        console.log(e)
+        res.status(500).send("Erro do servidor")
+    }  
+})
+
+
+
+
+//Inserindo perfume:
+// Parte para inserir um perfume no Back-end:
+app.post("/perfumes", async (req, res) => {
+   
+   
+    try{
+        const {id,nome,marca,fragancia,volume,preco,imagem} = req.body
+        
+        const banco = new BancoMysql();
+        
+        const perfume = {id:parseInt(id),nome,marca,fragancia,volume,preco,imagem}
+        const result = await banco.inserirPerfumes(perfume)
+        console.log(result)
+        
+        await banco.end()
+        
+        res.status(200).send(result)
+    }catch(e){
+        console.log(e)
+        res.status(500).send("Erro do servidor")
+    }  
+   
+   
+
+});
+// Parte do Felipe - Deletando os perfumes e Alterando eles:
+app.delete("/perfumes/:id",async (req,res) =>{
+    try{
+        const banco = new BancoMysql();
+
+        const sqlQuery = "DELETE FROM clientes WHERE id = ?"
+        const parametro = [req.params.id]
+
+        const result = await banco.excluirPerfumes(req.params.id)
+        
+
+        res.status(200).send(result)
+    }catch(e){
+          console.log(e)
+        res.status(500).send("Erro do servidor")
+    }  
+
+    console.log("Tentando excluir o perfume de id:", req.params.id)
+    
+})
+
+
+app.put("/perfumes/:id", async (req,res) =>{
+    try{
+        const {nome,marca,fragancia,volume,preco,imagem} = req.body
+        const banco = new BancoMysql();
+
+        //const sqlQuery = "UPDATE produtos SET nome = ?, marca = ?, fragancia = ?, volume = ?, preco = ?, imagem = ? WHERE id = ?"
+        const perfume = {nome,marca,fragancia,volume,preco,imagem}
+
+        const result = await banco.alterarPerfumes(req.params.id, perfume)
+        res.status(200).send(result)
+
+
+    }catch(e){
+        console.log(e)
+        res.status(500).send("Erro do servidor")
+    }  
+    console.log("Tentando alterar o perfume de id:",  req.params.id)
+   
+})
 
 
 
@@ -209,4 +206,4 @@ app.put("/clientes/:id", async (req,res) =>{
 //INICIAR o Servidor 
 app.listen(8000,()=>{
     console.log("SERVIDOR INICIADO NA PORTA 8000")
-})
+}) 
