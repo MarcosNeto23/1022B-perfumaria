@@ -27,7 +27,7 @@ class BancoMysql {
 
     async listarPerfumes(){
         const conn = await this.getConnection()
-        const [result, fields] = await conn.query("SELECT * from produtos");
+        const [result, fields] = await conn.query("SELECT * from perfumes");
         return result
     }
     async inserirPerfumes(perfume:{id:number,nome:string,marca:string,fragancia:string,volume:string,preco:string,imagem:string}){
@@ -39,14 +39,14 @@ class BancoMysql {
     }
     async excluirPerfumes(id:string){
         const conn = await this.getConnection()
-        const sqlQuery = "DELETE FROM produtos WHERE id = ?"
+        const sqlQuery = "DELETE FROM perfumes WHERE id = ?"
         const parametro = [id]
         const [result, fields] = await conn.query(sqlQuery,parametro);
         return result
     }
     async alterarPerfumes(id:string,perfume:{id?:string,nome:string,marca:string,fragancia:string,volume:string,preco:string,imagem:string}){
         const conn = await this.getConnection()
-        const sqlQuery = "UPDATE produtos SET nome=?,marca=?,fragancia=?,volume=?,preco=?,imagem=? WHERE id = ?"
+        const sqlQuery = "UPDATE perfumes SET nome=?,marca=?,fragancia=?,volume=?,preco=?,imagem=? WHERE id = ?"
         const parametro = [perfume.id,perfume.nome,perfume.marca,perfume.fragancia,perfume.volume,perfume.preco,perfume.imagem,id]
         const [result, fields] = await conn.query(sqlQuery,parametro);
         return result
