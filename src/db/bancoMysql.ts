@@ -30,10 +30,10 @@ class BancoMysql {
         const [result, fields] = await conn.query("SELECT * from perfumes");
         return result
     }
-    async inserirPerfumes(perfume:{id:number,nome:string,marca:string,fragancia:string,volume:string,preco:string,imagem:string}){
+    async inserirPerfumes(perfume:{id:number,nome:string,marca:string,fragrancia:string,volume:string,preco:string,imagem:string}){
         const conn = await this.getConnection()
-        const sqlQuery = "INSERT INTO perfumes (id,nome,marca,fragancia,volume,preco,imagem) VALUES (?,?,?,?,?,?,?)"
-        const parametro = [perfume.id,perfume.nome,perfume.marca,perfume.fragancia,perfume.volume,perfume.preco,perfume.imagem]
+        const sqlQuery = "INSERT INTO perfumes (id,nome,marca,fragrancia,volume,preco,imagem) VALUES (?,?,?,?,?,?,?)"
+        const parametro = [perfume.id,perfume.nome,perfume.marca,perfume.fragrancia,perfume.volume,perfume.preco,perfume.imagem]
         const [result, fields] = await conn.query(sqlQuery,parametro);
         return result
     }
@@ -44,10 +44,10 @@ class BancoMysql {
         const [result, fields] = await conn.query(sqlQuery,parametro);
         return result
     }
-    async alterarPerfumes(id:string,perfume:{id?:string,nome:string,marca:string,fragancia:string,volume:string,preco:string,imagem:string}){
+    async alterarPerfumes(id:string,perfume:{id?:string,nome:string,marca:string,fragrancia:string,volume:string,preco:string,imagem:string}){
         const conn = await this.getConnection()
-        const sqlQuery = "UPDATE perfumes SET nome=?,marca=?,fragancia=?,volume=?,preco=?,imagem=? WHERE id = ?"
-        const parametro = [perfume.nome,perfume.marca,perfume.fragancia,perfume.volume,perfume.preco,perfume.imagem,id]
+        const sqlQuery = "UPDATE perfumes SET nome=?,marca=?,fragrancia=?,volume=?,preco=?,imagem=? WHERE id = ?"
+        const parametro = [perfume.nome,perfume.marca,perfume.fragrancia,perfume.volume,perfume.preco,perfume.imagem,id]
         const [result, fields] = await conn.query(sqlQuery,parametro);
         return result
     }

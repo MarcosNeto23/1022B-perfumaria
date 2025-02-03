@@ -138,11 +138,11 @@ app.post("/perfumes", async (req, res) => {
    
    
     try{
-        const {id,nome,marca,fragancia,volume,preco,imagem} = req.body
+        const {id,nome,marca,fragrancia,volume,preco,imagem} = req.body
         
         const banco = new BancoMysql();
         
-        const perfume = {id:parseInt(id),nome,marca,fragancia,volume,preco,imagem}
+        const perfume = {id:parseInt(id),nome,marca,fragrancia,volume,preco,imagem}
         const result = await banco.inserirPerfumes(perfume)
         console.log(result)
         
@@ -181,11 +181,11 @@ app.delete("/perfumes/:id",async (req,res) =>{
 
 app.put("/perfumes/:id", async (req,res) =>{
     try{
-        const {nome,marca,fragancia,volume,preco,imagem} = req.body
+        const {nome,marca,fragrancia,volume,preco,imagem} = req.body
         const banco = new BancoMysql();
 
-        //const sqlQuery = "UPDATE produtos SET nome = ?, marca = ?, fragancia = ?, volume = ?, preco = ?, imagem = ? WHERE id = ?"
-        const perfume = {nome, marca, fragancia, volume, preco, imagem}
+        //const sqlQuery = "UPDATE produtos SET nome = ?, marca = ?, fragrancia = ?, volume = ?, preco = ?, imagem = ? WHERE id = ?"
+        const perfume = {nome, marca, fragrancia, volume, preco, imagem}
 
         const result = await banco.alterarPerfumes(req.params.id, perfume)
         res.status(200).send(result)
