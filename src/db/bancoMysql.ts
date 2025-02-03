@@ -30,6 +30,15 @@ class BancoMysql {
         const [result, fields] = await conn.query("SELECT * from perfumes");
         return result
     }
+    async listarPerfumesPorId(id:string){
+        const conn = await this.getConnection()
+        const sqlQuery = "SELECT * FROM perfumes WHERE id = ?"
+        const parametro = [id]
+        const [result, fields] = await conn.query(sqlQuery,parametro) as RowDataPacket[];
+        //Return the first element of the array
+        return result[0]
+    }
+
     async inserirPerfumes(perfume:{id:number,nome:string,marca:string,fragrancia:string,volume:string,preco:string,imagem:string}){
         const conn = await this.getConnection()
         const sqlQuery = "INSERT INTO perfumes (id,nome,marca,fragrancia,volume,preco,imagem) VALUES (?,?,?,?,?,?,?)"
