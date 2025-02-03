@@ -47,7 +47,7 @@ class BancoMysql {
     async alterarPerfumes(id:string,perfume:{id?:string,nome:string,marca:string,fragancia:string,volume:string,preco:string,imagem:string}){
         const conn = await this.getConnection()
         const sqlQuery = "UPDATE perfumes SET nome=?,marca=?,fragancia=?,volume=?,preco=?,imagem=? WHERE id = ?"
-        const parametro = [perfume.id,perfume.nome,perfume.marca,perfume.fragancia,perfume.volume,perfume.preco,perfume.imagem,id]
+        const parametro = [perfume.nome,perfume.marca,perfume.fragancia,perfume.volume,perfume.preco,perfume.imagem,id]
         const [result, fields] = await conn.query(sqlQuery,parametro);
         return result
     }
