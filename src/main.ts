@@ -185,7 +185,7 @@ app.put("/perfumes/:id", async (req,res) =>{
         const banco = new BancoMysql();
 
         //const sqlQuery = "UPDATE produtos SET nome = ?, marca = ?, fragancia = ?, volume = ?, preco = ?, imagem = ? WHERE id = ?"
-        const perfume = {nome,marca,fragancia,volume,preco,imagem}
+        const perfume = {nome, marca, fragancia, volume, preco, imagem}
 
         const result = await banco.alterarPerfumes(req.params.id, perfume)
         res.status(200).send(result)
