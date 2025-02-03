@@ -41,6 +41,18 @@ app.get("/clientes", async (req, res) => {
     }  
 })
 
+app.get("/clientes/:id", async(req,res)=>{
+    try{
+        const banco = new BancoMysql();
+        const result = await banco.listarClientesPorId(req.params.id)
+        console.log(result)
+        await banco.end()
+        res.send(result)
+    }catch(e){
+        console.log(e)
+        res.status(500).send("Erro do servidor")
+    }  
+})
 
 
 
@@ -112,6 +124,18 @@ app.put("/clientes/:id", async (req,res) =>{
 })
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 /// Parte de Configuração dos Perfumes feito por Marcos Antonio e Felipe Brito:
  
 // Parte do Marcos - Listagem, Inserindo, alterando e removendo perfumes :
@@ -128,6 +152,8 @@ app.get("/perfumes", async (req, res) => {
         res.status(500).send("Erro do servidor")
     }  
 })
+
+
 
 
 

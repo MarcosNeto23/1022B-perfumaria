@@ -1,4 +1,4 @@
-import mysql, { Connection } from 'mysql2/promise';
+import mysql, { Connection, RowDataPacket } from 'mysql2/promise';
 
 class BancoMysql {
     // Propriedade
@@ -61,6 +61,18 @@ class BancoMysql {
         const [result, fields] = await conn.query("SELECT * from clientes");
         return result
     }
+
+    async listarClientesPorId(id:string){
+        const conn = await this.getConnection()
+        const sqlQuery = "SELECT * FROM clientes WHERE id = ?"
+        const parametro = [id]
+        const [result, fields] = await conn.query(sqlQuery,parametro) as RowDataPacket[];
+        //Return the first element of the array
+        return result[0]
+    }
+
+
+
     async inserirClientes(cliente:{id:number,nome:string,sobrenome:string,idade:string,email:string}){
         const conn = await this.getConnection()
         const sqlQuery = "INSERT INTO clientes (id,nome,sobrenome,idade,email) VALUES (?,?,?,?,?)"
